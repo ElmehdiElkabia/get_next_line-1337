@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eelkabia <eelkabia@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:44:28 by eelkabia          #+#    #+#             */
-/*   Updated: 2024/11/23 16:06:43 by eelkabia         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:06:10 by eelkabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*get_lines(int fd, char *str, char *buffer)
 {
@@ -64,27 +64,27 @@ static char	*get_only_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[FD_SIZE];
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || fd >= FD_SIZE || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(str);
-		str = NULL;
+		if (fd >= 0 && fd < FD_SIZE)
+			free(str[fd]);
 		return (NULL);
 	}
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	line = get_lines(fd, str, buffer);
+	line = get_lines(fd, str[fd], buffer);
 	free(buffer);
 	if (!line)
 	{
-		free(str);
-		str = NULL;
+		free(str[fd]);
+		str[fd] = NULL;
 		return (NULL);
 	}
-	str = get_only_line(line);
+	str[fd] = get_only_line(line);
 	return (line);
 }
