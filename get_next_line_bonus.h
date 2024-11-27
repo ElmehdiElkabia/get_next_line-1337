@@ -6,7 +6,7 @@
 /*   By: eelkabia <eelkabia@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:44:26 by eelkabia          #+#    #+#             */
-/*   Updated: 2024/11/23 15:47:27 by eelkabia         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:04:57 by eelkabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 # ifndef FD_SIZE
-#  define FD_SIZE 1042
+#  define FD_SIZE 4096
 # endif
 
 char	*get_next_line(int fd);

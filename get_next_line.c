@@ -6,7 +6,7 @@
 /*   By: eelkabia <eelkabia@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:44:28 by eelkabia          #+#    #+#             */
-/*   Updated: 2024/11/23 16:06:43 by eelkabia         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:47:57 by eelkabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ static char	*get_lines(int fd, char *str, char *buffer)
 	char	*temp;
 
 	b_read = read(fd, buffer, BUFFER_SIZE);
-	if (b_read < 0)
-		str = NULL;
 	while (b_read > 0)
 	{
 		buffer[b_read] = '\0';
 		if (!str)
 			str = ft_strdup("");
 		temp = ft_strjoin(str, buffer);
-		if (!temp)
-		{
-			free(str);
-			return (NULL);
-		}
 		free(str);
+		if (!temp)
+			return (NULL);
 		str = temp;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 		b_read = read(fd, buffer, BUFFER_SIZE);
+	}
+	if (b_read < 0)
+	{
+		free(str);
+		str = NULL;
 	}
 	return (str);
 }
@@ -51,9 +51,7 @@ static char	*get_only_line(char *line)
 	if (line[i] == '\0')
 		return (NULL);
 	str = ft_strdup(line + i + 1);
-	if (!str)
-		return (NULL);
-	if (*str == '\0')
+	if (!str || *str == '\0')
 	{
 		free(str);
 		str = NULL;
@@ -65,14 +63,14 @@ static char	*get_only_line(char *line)
 char	*get_next_line(int fd)
 {
 	static char	*str;
-	char		*line;
 	char		*buffer;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 	{
 		free(str);
 		str = NULL;
-		return (NULL);
+		return (str);
 	}
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
