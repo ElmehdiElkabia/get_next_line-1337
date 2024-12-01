@@ -6,7 +6,7 @@
 /*   By: eelkabia <eelkabia@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 09:44:26 by eelkabia          #+#    #+#             */
-/*   Updated: 2024/11/26 13:04:57 by eelkabia         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:32:23 by eelkabia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # include <stdint.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1042
-# endif
-
-# ifndef FD_SIZE
-#  define FD_SIZE 4096
 # endif
 
 char	*get_next_line(int fd);
